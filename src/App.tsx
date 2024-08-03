@@ -1,24 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import Layout from "./components/Layout";
+import Main from "./pages/profile/main/Main";
+import RegisterPage from "./pages/auth/register/Register";
+import Statistics from "./pages/profile/static/Statistics";
+
+import { logIn } from "./redux/feauters/auth/authSlice";
+import { uploadStateRTK } from "./redux/feauters/taskAllDays/taskAllDays";
+import {
+  momentNow,
+  uploadTodayRTK,
+} from "./redux/feauters/taskToday/taskToday";
+import MobileMenu from "./components/MobileMenu";
+import NotFound from "./components/NotFound";
 
 function App() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let user = localStorage.getItem("userInfo");
+  let uploadData = localStorage.getItem("allTask");
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/register");
+    }
+
+    if (user) {
+      dispatch(logIn(JSON.parse(user)));
+    }
+  }, [user, dispatch]);
+
+  useEffect(() => {
+    if (uploadData) {
+      let newData = JSON.parse(uploadData);
+      dispatch(uploadStateRTK(newData));
+
+      const today = newData.allTasks?.filter(
+        (item: any) => item.date === momentNow,
+      );
+
+      if (today[0]) {
+        dispatch(uploadTodayRTK(today[0]));
+      }
+    }
+  }, [uploadData]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <Routes>
+          <Route
+            path="/register"
+            element={user ? <NotFound /> : <RegisterPage />}
+          />
+          <Route path="/" element={<Main />} />
+          <Route path="/totalStatistics" element={<Statistics />} />
+          <Route path="/menu" element={<MobileMenu />} />
+        </Routes>
+      </Layout>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
