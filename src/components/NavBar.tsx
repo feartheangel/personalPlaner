@@ -8,7 +8,6 @@ import classNames from "classnames";
 
 const NavBar = () => {
   const [questionShow, setQuestionShow] = useState<boolean>(false);
-  const [opened, setOpened] = useState(false);
   const { id, name } = useSelector((state: any) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,9 +68,6 @@ const NavBar = () => {
               <div
                 className={classNames(
                   `tham tham-e-squeeze tham-w-6 bg-transparent md:hidden`,
-                  {
-                    "tham-active": opened,
-                  },
                 )}
               >
                 <div className="tham-box">
