@@ -54,7 +54,6 @@ const updateState = (state: IState, action: any) => {
     return null;
   });
 
-  console.log(state.allTasks[0]);
   state.allPercentSuccessTask = Math.round(
     (allCompletedTask / allTotalTask) * 100,
   );
