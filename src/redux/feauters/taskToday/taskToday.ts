@@ -53,6 +53,7 @@ const completedTaskHandler = (state: IState, id: number) => {
     if (item.id === id) {
       item.status = !item.status;
     }
+    return null;
   });
 };
 
@@ -67,7 +68,6 @@ const taskTodaySlice = createSlice({
     saveTask: (state, action) => {
       state.tasks.push(action.payload);
       state.date = momentNow;
-      // "20-07-2024"
       state.totalTask = state.tasks.length;
       state.percentSuccessTask = percent(state);
     },
@@ -89,10 +89,23 @@ const taskTodaySlice = createSlice({
       state.workingTask = action.payload.workingTask;
       state.totalTask = action.payload.totalTask;
     },
+    clearTask: (state) => {
+      state.tasks = [];
+      state.date = "";
+      state.percentSuccessTask = 0;
+      state.completedTask = 0;
+      state.workingTask = 0;
+      state.totalTask = 0;
+    },
   },
 });
 
-export const { saveTask, completedTaskRTK, deleteTaskRTK, uploadTodayRTK } =
-  taskTodaySlice.actions;
+export const {
+  saveTask,
+  completedTaskRTK,
+  deleteTaskRTK,
+  uploadTodayRTK,
+  clearTask,
+} = taskTodaySlice.actions;
 
 export default taskTodaySlice.reducer;

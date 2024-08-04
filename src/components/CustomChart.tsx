@@ -74,7 +74,7 @@ const CustomChart = () => {
           {pathname === route ? allTasks.allWorkingTask : tasks.workingTask}
         </p>
         <p className="mt-4 font-bold md:text-2xl">
-          Процент успеха -{" "}
+          Выполнено -{" "}
           {pathname === route
             ? allTasks.allPercentSuccessTask
             : tasks.percentSuccessTask}

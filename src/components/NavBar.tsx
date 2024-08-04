@@ -5,6 +5,8 @@ import QuestionWindow from "./QuestionWindow";
 import { logout } from "../redux/feauters/auth/authSlice";
 import { toast } from "react-toastify";
 import classNames from "classnames";
+import { removeTasks } from "../redux/feauters/taskAllDays/taskAllDays";
+import { clearTask } from "../redux/feauters/taskToday/taskToday";
 
 const NavBar = () => {
   const [questionShow, setQuestionShow] = useState<boolean>(false);
@@ -19,8 +21,9 @@ const NavBar = () => {
 
   const logOutHandler = () => {
     setQuestionShow(!questionShow);
-    localStorage.removeItem("userInfo");
     dispatch(logout());
+    dispatch(removeTasks());
+    dispatch(clearTask());
     toast.success("Выход из профиля!");
     navigate("/register");
   };

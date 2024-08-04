@@ -50,14 +50,19 @@ const updateState = (state: IState, action: any) => {
     allWorkingTask += item.workingTask;
     allCompletedTask += item.completedTask;
     allTotalTask += item.totalTask;
+
+    return null;
   });
 
+  console.log(state.allTasks[0]);
   state.allPercentSuccessTask = Math.round(
-    (allWorkingTask / allTotalTask) * 100,
+    (allCompletedTask / allTotalTask) * 100,
   );
   state.allTotalTasks = allTotalTask;
   state.allCompletedTask = allCompletedTask;
   state.allWorkingTask = allWorkingTask;
+
+  return;
 };
 
 const uploadState = (state: IState, action: any) => {
@@ -79,9 +84,17 @@ const taskAllDaysSlice = createSlice({
     uploadStateRTK(state, action) {
       uploadState(state, action);
     },
+    removeTasks(state) {
+      state.allTasks = [];
+      state.allPercentSuccessTask = 0;
+      state.allTotalTasks = 0;
+      state.allCompletedTask = 0;
+      state.allWorkingTask = 0;
+    },
   },
 });
 
-export const { updateAllTask, uploadStateRTK } = taskAllDaysSlice.actions;
+export const { updateAllTask, uploadStateRTK, removeTasks } =
+  taskAllDaysSlice.actions;
 
 export default taskAllDaysSlice.reducer;

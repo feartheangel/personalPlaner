@@ -51,7 +51,7 @@ const CreateTask = () => {
           />
           <button
             onClick={(e) => createTaskHandler(e)}
-            className="px-4 py-2 text-xs md:text-base text-white bg-green-400 rounded hover:bg-green-600 w-max"
+            className="px-4 py-2 text-xs md:text-base text-white bg-green-400 rounded hover:bg-green-600 md:w-max w-4/12"
           >
             Создать
             <SendIcon className="ml-2" />

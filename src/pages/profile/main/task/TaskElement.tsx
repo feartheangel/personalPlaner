@@ -25,7 +25,7 @@ const TaskElement = ({ task, idx }: IProps) => {
   };
 
   return (
-    <div className="w-full flex flex-wrap md:flex-nowrap md:justify-center justify-evenly items-center mb-6 last:mb-0 pb-5 md:pb-0 md:border-none border-b-2 border-y-gray-700">
+    <div className="w-full flex flex-wrap md:flex-nowrap md:justify-center justify-evenly items-center mb-6 last:mb-0 pb-5 md:pb-0 md:border-none border-b-2 border-y-gray-700 last:border-none">
       <Button
         variant="contained"
         color="success"

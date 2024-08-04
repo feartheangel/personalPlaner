@@ -29,6 +29,7 @@ const authSlice = createSlice({
       state.user.id = null;
       state.user.dateRegistration = null;
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("allTask");
     },
   },
 });
