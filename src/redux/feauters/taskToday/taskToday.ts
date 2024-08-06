@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment/moment";
-import { useSelector } from "react-redux";
 import { ITasksToday } from "../taskAllDays/taskAllDays";
 
 export interface ITask {
