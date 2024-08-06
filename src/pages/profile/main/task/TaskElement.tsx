@@ -28,11 +28,11 @@ const TaskElement = ({ task, idx }: IProps) => {
     <div className="w-full flex flex-wrap md:flex-nowrap md:justify-center justify-evenly items-center mb-6 last:mb-0 pb-5 md:pb-0 md:border-none border-b-2 border-y-gray-700 last:border-none">
       <Button
         variant="contained"
-        color="success"
+        color={!task.status ? "success" : "error"}
         onClick={(e) => completedTask(e)}
-        className="order-2 md:order-1 mr-5 md:mr-0"
+        className="order-2 md:order-1 mr-5 md:mr-0 md:w-2/12 w-5/12"
       >
-        Выполнено
+        {task.status ? "Отменить" : "Выполнить"}
       </Button>
       <p
         className={

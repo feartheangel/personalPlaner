@@ -51,7 +51,7 @@ const CreateTask = () => {
         </div>
         <p className="md:mr-5 ml-5 md:ml-0 md:order-1">
           Сегодня:{" "}
-          <span className="text-xl text-sky-50 font-bold">{dateNow}</span>{" "}
+          <span className="text-xl text-sky-50 font-bold">{momentNow}</span>{" "}
         </p>
       </div>
 
