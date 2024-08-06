@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "./components/Layout";
 import Main from "./pages/profile/main/Main";
@@ -11,10 +11,7 @@ import Statistics from "./pages/profile/static/Statistics";
 
 import { logIn } from "./redux/feauters/auth/authSlice";
 import { uploadStateRTK } from "./redux/feauters/taskAllDays/taskAllDays";
-import {
-  momentNow,
-  uploadTodayRTK,
-} from "./redux/feauters/taskToday/taskToday";
+import { uploadTodayRTK } from "./redux/feauters/taskToday/taskToday";
 import MobileMenu from "./components/MobileMenu";
 import NotFound from "./components/NotFound";
 
@@ -23,6 +20,7 @@ function App() {
   const dispatch = useDispatch();
   let user = localStorage.getItem("userInfo");
   let uploadData = localStorage.getItem("allTask");
+  const selectDate = useSelector((state: any) => state.taskToday.selectDate);
 
   useEffect(() => {
     if (!user) {
@@ -40,7 +38,7 @@ function App() {
       dispatch(uploadStateRTK(newData));
 
       const today = newData.allTasks?.filter(
-        (item: any) => item.date === momentNow,
+        (item: any) => item.date === selectDate,
       );
 
       if (today[0]) {

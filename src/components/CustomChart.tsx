@@ -46,7 +46,7 @@ const CustomChart = () => {
         series={[
           {
             data,
-            arcLabel: (item) => `${item.name} (${item.value}%)`,
+            arcLabel: (item: any) => `${item?.name} (${item?.value}%)`,
             arcLabelMinAngle: 45,
           },
         ]}

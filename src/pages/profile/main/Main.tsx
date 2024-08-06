@@ -15,10 +15,10 @@ const Main = () => {
     if (totalDay.totalTask) {
       dispatch(updateAllTask(totalDay));
     }
-  }, [totalDay.totalTask, totalDay.completedTask, tasks.length]);
+  }, [tasks]);
 
   const emptyTasks = () => {
-    if (tasks.length === 0) {
+    if (!tasks.length) {
       return <p className="text-xl font-bold">Активных задач нет...</p>;
     }
   };

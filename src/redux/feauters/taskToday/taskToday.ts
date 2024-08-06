@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment/moment";
+import { useSelector } from "react-redux";
+import { ITasksToday } from "../taskAllDays/taskAllDays";
 
 export interface ITask {
   id: number | null;
@@ -14,6 +16,7 @@ export interface IState {
   totalTask: number;
   completedTask: number;
   workingTask: number;
+  selectDate: string;
 }
 
 export const momentNow = moment().format("DD-MM-YYYY");
@@ -25,6 +28,7 @@ const initialState: IState = {
   completedTask: 0,
   workingTask: 0,
   totalTask: 0,
+  selectDate: momentNow,
 };
 
 export const percent = (state: IState) => {
@@ -66,8 +70,8 @@ const taskTodaySlice = createSlice({
   initialState,
   reducers: {
     saveTask: (state, action) => {
-      state.tasks.push(action.payload);
-      state.date = momentNow;
+      state.tasks?.push(action.payload.today);
+      state.date = action.payload.dateNow;
       state.totalTask = state.tasks.length;
       state.percentSuccessTask = percent(state);
     },
@@ -83,7 +87,7 @@ const taskTodaySlice = createSlice({
     },
     uploadTodayRTK: (state, action) => {
       state.tasks = action.payload.tasks;
-      state.date = action.payload.date;
+      state.date = state.selectDate;
       state.percentSuccessTask = action.payload.percentSuccessTask;
       state.completedTask = action.payload.completedTask;
       state.workingTask = action.payload.workingTask;
@@ -97,6 +101,29 @@ const taskTodaySlice = createSlice({
       state.workingTask = 0;
       state.totalTask = 0;
     },
+    todaySelectDate: (state, action) => {
+      state.selectDate = action.payload;
+      state.date = action.payload;
+
+      let uploadData = localStorage.getItem("allTask");
+      let tasksActive = [];
+
+      if (uploadData) {
+        const data = JSON.parse(uploadData);
+        const selectDate = action.payload ? action.payload : momentNow;
+
+        const today: any = data?.allTasks?.filter(
+          (item: ITasksToday) => item.date === selectDate,
+        );
+        tasksActive = today[0]?.tasks;
+
+        state.tasks = tasksActive ? tasksActive : [];
+        state.percentSuccessTask = today[0] ? today[0].percentSuccessTask : 0;
+        state.completedTask = today[0] ? today[0].completedTask : 0;
+        state.workingTask = today[0] ? today[0].workingTask : 0;
+        state.totalTask = today[0] ? today[0].totalTask : 0;
+      }
+    },
   },
 });
 
@@ -106,6 +133,7 @@ export const {
   deleteTaskRTK,
   uploadTodayRTK,
   clearTask,
+  todaySelectDate,
 } = taskTodaySlice.actions;
 
 export default taskTodaySlice.reducer;

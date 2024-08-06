@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import moment from "moment";
 import { uid } from "uid";
 import { useDispatch } from "react-redux";
-import { saveTask } from "../../../../redux/feauters/taskToday/taskToday";
+import {
+  saveTask,
+  todaySelectDate,
+} from "../../../../redux/feauters/taskToday/taskToday";
 import { toast } from "react-toastify";
+import DatePickerCustom from "../../../../components/DatePickerCustom";
 
 const CreateTask = () => {
+  const momentNow = moment().format("DD-MM-YYYY");
   const [textTask, setTextTask] = useState<string>("");
+  const [dateNow, setDateNow] = useState(momentNow);
   const dispatch = useDispatch();
   const changeTextHandler = (e: string) => {
     setTextTask(e);
@@ -17,9 +23,12 @@ const CreateTask = () => {
     e.preventDefault();
 
     const totalData = {
-      id: uid(),
-      message: textTask,
-      status: false,
+      today: {
+        id: uid(),
+        message: textTask,
+        status: false,
+      },
+      dateNow: dateNow,
     };
 
     if (!textTask.length) {
@@ -30,13 +39,22 @@ const CreateTask = () => {
     setTextTask("");
   };
 
-  const momentNow = moment().format("DD-MM-YYYY");
+  useEffect(() => {
+    dispatch(todaySelectDate(dateNow));
+  }, [dateNow]);
+
   return (
     <div className="flex flex-col md:flex md:flex-row justify-between items-center">
-      <p>
-        Сегодня:{" "}
-        <span className="text-xl text-sky-50 font-bold">{momentNow}</span>{" "}
-      </p>
+      <div className="flex justify-center items-center">
+        <div className="md:w-6/12 w-5/12 md:order-2">
+          <DatePickerCustom setDateNow={setDateNow} />
+        </div>
+        <p className="md:mr-5 ml-5 md:ml-0 md:order-1">
+          Сегодня:{" "}
+          <span className="text-xl text-sky-50 font-bold">{dateNow}</span>{" "}
+        </p>
+      </div>
+
       <form className="md:w-1/2 w-full flex flex-col md:flex-row justify-end mt-10 md:mt-0">
         <label>Введите задачу:</label>
 

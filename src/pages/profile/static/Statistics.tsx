@@ -95,17 +95,18 @@ const Statistics = () => {
           <div className="mt-5">
             <ul>
               {nowDay.tasks?.map((item: any, idx: number) => (
-                <li
-                  key={item.date}
-                  className={
-                    item.status
-                      ? "md:w-1/2 mr-5 flex font-bold text-xl text-green-400 line-through decoration-white my-5"
-                      : "md:w-1/2 mr-5 flex font-bold text-xl text-sky-50 my-5"
-                  }
-                >
-                  <span className="mr-2">{idx + 1}.</span>
-                  {item.message}
-                </li>
+                <React.Fragment key={item.date}>
+                  <li
+                    className={
+                      item.status
+                        ? "md:w-1/2 mr-5 flex font-bold text-xl text-green-400 line-through decoration-white my-5"
+                        : "md:w-1/2 mr-5 flex font-bold text-xl text-sky-50 my-5"
+                    }
+                  >
+                    <span className="mr-2">{idx + 1}.</span>
+                    {item.message}
+                  </li>
+                </React.Fragment>
               ))}
             </ul>
           </div>
