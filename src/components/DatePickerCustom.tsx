@@ -9,7 +9,7 @@ const options: any = {
   todayBtnText: "Выбрать сегодня",
   clearBtn: false,
   maxDate: new Date("2030-01-01"),
-  minDate: new Date(),
+  minDate: new Date("2024-01-01"),
   datepickerClassNames: "top-12",
   defaultDate: new Date(),
   language: "ru",
