@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment/moment";
 import { ITasksToday } from "../taskAllDays/taskAllDays";
+import { toast } from "react-toastify";
 
 export interface ITask {
   id: number | null;
@@ -55,13 +56,25 @@ const completedTaskHandler = (state: IState, id: number) => {
   return state.tasks.map((item: ITask) => {
     if (item.id === id) {
       item.status = !item.status;
+
+      item.status ? toast.success("Выполнено!") : toast.error("Отменено!");
     }
     return null;
   });
 };
 
+const changeTaskHandler = (
+  state: IState,
+  info: { text: string; id: number },
+) => {
+  let idx = state.tasks.findIndex((item: any) => item.id === info.id);
+  state.tasks[idx].message = info.text;
+  toast.success("Сохранено!");
+};
+
 const deleteTaskHandler = (state: IState, id: number) => {
   state.tasks = state.tasks.filter((item: ITask) => item.id !== id);
+  toast.error("Удалено!");
 };
 
 const taskTodaySlice = createSlice({
@@ -69,6 +82,7 @@ const taskTodaySlice = createSlice({
   initialState,
   reducers: {
     saveTask: (state, action) => {
+      toast.success("Задача создана!");
       state.tasks?.push(action.payload.today);
       state.date = action.payload.dateNow;
       state.totalTask = state.tasks.length;
@@ -83,6 +97,9 @@ const taskTodaySlice = createSlice({
       deleteTaskHandler(state, action.payload);
       state.totalTask = state.tasks.length;
       state.percentSuccessTask = percent(state);
+    },
+    changeTaskRTK: (state, action) => {
+      changeTaskHandler(state, action.payload);
     },
     uploadTodayRTK: (state, action) => {
       state.tasks = action.payload.tasks;
@@ -133,6 +150,7 @@ export const {
   uploadTodayRTK,
   clearTask,
   todaySelectDate,
+  changeTaskRTK,
 } = taskTodaySlice.actions;
 
 export default taskTodaySlice.reducer;
