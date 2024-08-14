@@ -9,9 +9,9 @@ const Achievements = () => {
   const emptyHandler = () => {
     const data = achievements?.filter((elem: any) => elem.status);
 
-    if (!data.length) {
+    if (!data?.length) {
       return (
-        <div className="w-screen flex justify-center items-center mt-60">
+        <div className="flex justify-center items-center mt-60">
           <p className="text-xl font-bold">Достижений нет...</p>
         </div>
       );
