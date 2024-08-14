@@ -96,7 +96,7 @@ const updateState = (state: IState, action: any) => {
 };
 
 const updateAchievements = (state: IState) => {
-  if (state.achievements.length) {
+  if (state.achievements?.length) {
     if (state.allCompletedTask === 1 && !state.achievements[0].status) {
       state.achievements[0].status = true;
       toast.warning(`Получено достижение "${state.achievements[0].name}"`);
