@@ -99,4 +99,4 @@ const TaskElement = ({ task, idx }: IProps) => {
   );
 };
 
-export default TaskElement;
+export default React.memo(TaskElement);

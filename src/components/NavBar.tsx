@@ -60,6 +60,16 @@ const NavBar = () => {
                 Общая статистика
               </NavLink>
             </li>
+
+            <li>
+              <NavLink
+                to={"/achievements"}
+                style={({ isActive }) => (isActive ? activeStyles : undefined)}
+                className="text-gray-400 hover:text-white"
+              >
+                Достижения
+              </NavLink>
+            </li>
           </ul>
 
           <div className="flex items-center">

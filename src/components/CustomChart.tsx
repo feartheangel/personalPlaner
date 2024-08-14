@@ -29,7 +29,7 @@ const CustomChart = () => {
             : tasks.percentSuccessTask,
         ),
       color: "red",
-      name: "В процессе",
+      name: pathname === route ? "Провалено" : "В процессе",
     },
   ];
 

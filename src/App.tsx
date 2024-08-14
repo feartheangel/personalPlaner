@@ -14,6 +14,7 @@ import { uploadStateRTK } from "./redux/feauters/taskAllDays/taskAllDays";
 import { uploadTodayRTK } from "./redux/feauters/taskToday/taskToday";
 import MobileMenu from "./components/MobileMenu";
 import NotFound from "./components/NotFound";
+import Achievements from "./pages/profile/achievements/Achievements";
 
 function App() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ function App() {
           />
           <Route path="/" element={<Main />} />
           <Route path="/totalStatistics" element={<Statistics />} />
+          <Route path="/achievements" element={<Achievements />} />
           <Route path="/menu" element={<MobileMenu />} />
         </Routes>
       </Layout>
