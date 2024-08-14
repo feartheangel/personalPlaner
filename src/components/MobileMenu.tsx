@@ -32,6 +32,10 @@ const MobileMenu = () => {
             <Link to={"/totalStatistics"}>Общая статистика</Link>
           </li>
 
+          <li>
+            <Link to={"/achievements"}>Достижения</Link>
+          </li>
+
           <li onClick={openWarning}>Выйти</li>
         </ul>
       </div>
