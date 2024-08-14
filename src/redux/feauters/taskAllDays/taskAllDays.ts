@@ -118,7 +118,9 @@ const uploadState = (state: IState, action: any) => {
   state.allTotalTasks = action.payload.allTotalTasks;
   state.allCompletedTask = action.payload.allCompletedTask;
   state.allWorkingTask = action.payload.allWorkingTask;
-  state.achievements = action.payload.achievements;
+  if (action.payload.achievements) {
+    state.achievements = action.payload.achievements;
+  }
 };
 
 const taskAllDaysSlice = createSlice({
