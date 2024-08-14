@@ -4,6 +4,8 @@ import QuestionWindow from "./QuestionWindow";
 import { logout } from "../redux/feauters/auth/authSlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { removeTasks } from "../redux/feauters/taskAllDays/taskAllDays";
+import { clearTask } from "../redux/feauters/taskToday/taskToday";
 
 const MobileMenu = () => {
   const dispatch = useDispatch();
@@ -11,8 +13,9 @@ const MobileMenu = () => {
   const [questionShow, setQuestionShow] = useState<boolean>(false);
   const logOutHandler = () => {
     setQuestionShow(!questionShow);
-    localStorage.removeItem("userInfo");
     dispatch(logout());
+    dispatch(removeTasks());
+    dispatch(clearTask());
     toast.success("Выход из профиля!");
     navigate("/register");
   };
