@@ -11,7 +11,7 @@ const Achievements = () => {
 
     if (!data?.length) {
       return (
-        <div className="flex justify-center items-center mt-60">
+        <div className="w-full flex justify-center items-center mt-60">
           <p className="text-xl font-bold">Достижений нет...</p>
         </div>
       );
