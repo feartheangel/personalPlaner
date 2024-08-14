@@ -36,7 +36,6 @@ function App() {
   useEffect(() => {
     if (uploadData) {
       let newData = JSON.parse(uploadData);
-      console.log(newData);
       dispatch(uploadStateRTK(newData));
 
       const today = newData.allTasks?.filter(
