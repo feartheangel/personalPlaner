@@ -6,14 +6,26 @@ const Achievements = () => {
     (state: any) => state.taskAllDays.achievements,
   );
 
+  const emptyHandler = () => {
+    const data = achievements?.filter((elem: any) => elem.status);
+
+    if (!data.length) {
+      return (
+        <div className="w-screen flex justify-center items-center mt-60">
+          <p className="text-xl font-bold">Достижений нет...</p>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="w-full px-4 my-6 flex flex-col">
       <p className="font-bold md:text-2xl text-xl text-white mb-10 flex justify-center">
         ДОСТИЖЕНИЯ
       </p>
-      <div className="md:flex">
+      <div className="md:flex h-auto">
         {achievements
-          .filter((elem: any) => elem.status)
+          ?.filter((elem: any) => elem.status)
           .map((item: any) => (
             <div
               key={item.id}
@@ -23,6 +35,7 @@ const Achievements = () => {
               <p className="text-2xl mt-5 md:mt-0">{item.name}</p>
             </div>
           ))}
+        {emptyHandler()}
       </div>
     </div>
   );
