@@ -60,6 +60,7 @@ function App() {
           <Route path="/totalStatistics" element={<Statistics />} />
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/menu" element={<MobileMenu />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
 
