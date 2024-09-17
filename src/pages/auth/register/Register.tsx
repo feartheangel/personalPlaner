@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import oldCement from "../../../assets/auth/SL_0210121_40570_75.jpg";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "@react-oauth/google";
 import { uid } from "uid";
+import { jwtDecode } from "jwt-decode";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../../redux/feauters/auth/authSlice";
@@ -33,6 +35,37 @@ const RegisterPage = () => {
   };
   const changeName = (e: string) => {
     setName(e.toUpperCase());
+  };
+
+  const googleSuccessHandler = (credentialResponse: any) => {
+    let googleToken = credentialResponse.credential;
+    const decodedToken: any = jwtDecode(googleToken);
+
+    if (decodedToken) {
+      let firstName = decodedToken.given_name;
+
+      const momentNow = moment().format("DD-MM-YYYY");
+
+      const totalData = {
+        name: firstName,
+        id: uid(25),
+        dateRegistration: momentNow,
+      };
+
+      dispatch(logIn(totalData));
+      // @ts-ignore
+      localStorage.setItem("userInfo", JSON.stringify(totalData));
+      navigate("/");
+      setName("");
+    }
+
+    return;
+  };
+
+  const googleErrorHandler = () => {
+    toast.error("Ошибка google авторизации!", {
+      position: "top-center",
+    });
   };
 
   return (
@@ -69,6 +102,13 @@ const RegisterPage = () => {
         >
           <span className="text-2xl md:text-xl">Зарегистрировать</span>
         </button>
+
+        <div className="w-10 py-4">
+          <GoogleLogin
+            onSuccess={googleSuccessHandler}
+            onError={googleErrorHandler}
+          />
+        </div>
       </form>
     </div>
   );
